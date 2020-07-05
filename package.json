@@ -22,5 +22,15 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "@mdi/font": "^5.3.45",
+        "apollo-boost": "^0.4.9",
+        "graphql": "^15.2.0",
+        "graphql-anywhere": "^4.2.7",
+        "moment": "^2.27.0",
+        "vue-apollo": "^3.0.3",
+        "vue-router": "^3.3.4",
+        "vuetify": "^2.3.3"
     }
 }
