@@ -15,7 +15,7 @@ type Query {
 
     issues: [Issue!]! @all
     issue(id: ID! @eq): Issue @find
-    openIssues: [Issue!]
+    unresolvedIssues: [Issue!]
 }
 
 type Mutation {
