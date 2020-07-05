@@ -1,0 +1,148 @@
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    clients: [Client!]! @all
+    client(id: ID! @eq): Client @find
+    activeClients: [Client!]
+
+    contact(id: ID! @eq): Contact @find
+
+    projects: [Project!]! @all
+    project(id: ID! @eq): Project @find
+
+    task(id: ID! @eq): Task @find
+
+    issues: [Issue!]! @all
+    issue(id: ID! @eq): Issue @find
+    openIssues: [Issue!]
+}
+
+type Mutation {
+    saveClient(input: ClientInput! @spread): Client @upsert
+    activateClient(id: ID!, active: Boolean!): Client @update
+    deleteClient(id: ID!): Client @delete
+
+    saveContact(input: ContactInput! @spread): Contact @upsert
+    deleteContact(id: ID!): Contact @delete
+
+    saveProject(input: ProjectInput! @spread): Project @upsert
+    completeProject(id: ID!, completed: Boolean!, completed_date: Date): Project @update
+    deleteProject(id: ID!): Project @delete
+
+    saveTask(input: TaskInput! @spread): Task @upsert
+    completeTask(id: ID! completed: Boolean! completed_date: Date): Task @update
+    deleteTask(id: ID!): Task @delete
+
+    saveIssue(input: IssueInput! @spread): Issue @upsert
+    resolveIssue(id: ID!, resolved: Boolean!, resolved_date: Date): Issue @update
+    deleteIssue(id: ID!): Issue @delete
+}
+
+type Client {
+    id: ID!
+    name: String!
+    details: String
+    active: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+
+    contacts: [Contact!]! @hasMany
+    projects: [Project!]! @hasMany
+}
+
+type Contact {
+    id: ID!
+    name: String!
+    title: String!
+    email: String!
+    phone: String
+    created_at: DateTime!
+    updated_at: DateTime!
+
+    client: [Client!]! @belongsTo
+}
+
+type Project {
+    id: ID!
+    name: String!
+    details: String
+    due_date: Date
+    completed: Boolean!
+    completed_date: Date
+    created_at: DateTime!
+    updated_at: DateTime!
+
+    client: Client! @belongsTo
+    tasks: [Task!]! @hasMany
+    issues: [Issue!]! @hasMany
+}
+
+type Task {
+    id: ID!
+    project: Project @belongsTo
+    details: String!
+    due_date: Date
+    completed: Boolean!
+    completed_date: Date
+    created_at: DateTime!
+    updated_at: DateTime!
+
+    project: Project! @belongsTo
+}
+
+type Issue {
+    id: ID!
+    project: Project @belongsTo
+    details: String!
+    priority: Int!
+    resolved: Boolean!
+    resolved_date: Date
+    created_at: DateTime!
+    updated_at: DateTime!
+
+    project: Project! @belongsTo
+}
+
+input ClientInput {
+    id: ID,
+    name: String!,
+    details: String
+}
+
+input ContactInput {
+    id: ID,
+    client_id: Int!,
+    name: String!,
+    title: String!,
+    email: String!,
+    phone: String
+}
+
+input ProjectInput {
+    id: ID,
+    client_id: Int!,
+    name: String!,
+    details: String,
+    due_date: Date,
+    completed: Boolean,
+    completed_date: Date
+}
+
+input TaskInput {
+    id: ID,
+    project_id: Int!,
+    details: String!,
+    due_date: Date,
+    completed: Boolean,
+    completed_date: Date
+}
+
+input IssueInput {
+    id: ID,
+    project_id: Int!,
+    details: String!,
+    priority: Int!,
+    resolved: Boolean,
+    resolved_date: Date
+}
