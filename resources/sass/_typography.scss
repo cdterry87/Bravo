@@ -1,0 +1,14 @@
+h1,
+h2, 
+h3,
+h4,
+h5,
+body .v-application [class^="display-"] {
+  font-family: 'Kaushan Script',sans-serif !important;
+  cursor: default;
+}
+
+a {
+  text-decoration: none;
+  color: inherit !important;
+}
