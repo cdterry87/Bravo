@@ -53,9 +53,9 @@ export const GET_CLIENT = gql`query client ($id: ID!) {
 /* Issues */
 
 // Get only open issues
-export const GET_OPEN_ISSUES = gql`
+export const GET_UNRESOLVED_ISSUES = gql`
   {
-    openIssues {
+    unresolvedIssues {
       id
       details
       priority
