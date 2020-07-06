@@ -51,7 +51,7 @@
                         </span>
                       </td>
                       <td>{{ item.id }}</td>
-                      <td>{{ item.details | truncate(150) }}</td>
+                      <td>{{ item.details | truncate(100) }}</td>
                       <td>
                         <span class="hidden">{{ item.due_date }}</span>
                         {{ item.due_date | fromNow() }}
