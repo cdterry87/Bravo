@@ -12,7 +12,7 @@ $factory->define(Issue::class, function (Faker $faker) {
 
     return [
         'project_id' => rand(1, 9),
-        'details' => $faker->sentence(rand(3, 10)),
+        'details' => $faker->sentences(rand(1, 5), true),
         'priority' => rand(1, 5),
         'resolved' => $resolved,
         'resolved_date' => $resolved_date,

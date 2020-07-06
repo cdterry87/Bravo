@@ -12,7 +12,7 @@ $factory->define(Task::class, function (Faker $faker) {
 
     return [
         'project_id' => rand(1, 9),
-        'details' => $faker->paragraph(rand(1, 5)),
+        'details' => $faker->sentences(rand(1, 5), true),
         'due_date' => $faker->dateTimeBetween('-6 months', '+6 months'),
         'completed' => $completed,
         'completed_date' => $completed_date

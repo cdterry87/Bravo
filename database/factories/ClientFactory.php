@@ -5,8 +5,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Client::class, function (Faker $faker) {
     return [
-        'name' => ucwords($faker->sentence(rand(3, 6), true)),
-        'details' => $faker->paragraph(rand(1, 5)),
+        'name' => ucwords($faker->words(rand(3, 5), true)),
+        'details' => $faker->paragraph(rand(1, 3)),
         'active' => rand(0, 1)
     ];
 });

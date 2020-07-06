@@ -12,7 +12,7 @@ $factory->define(Project::class, function (Faker $faker) {
 
     return [
         'client_id' => rand(1, 9),
-        'name' => ucwords($faker->sentence(rand(3, 6), true)),
+        'name' => ucwords($faker->words(rand(3, 5), true)),
         'details' => $faker->paragraph(rand(1, 3)),
         'due_date' => $faker->dateTimeBetween('-6 months', '+6 months'),
         'completed' => $completed,
