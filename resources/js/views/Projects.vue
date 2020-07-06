@@ -38,8 +38,8 @@
                   </span>
                 </td>
                 <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.client.name }}</td>
+                <td>{{ item.name | truncate(40) }}</td>
+                <td>{{ item.client.name | truncate(30) }}</td>
                 <td>
                   <span class="hidden">{{ item.due_date }}</span>
                   {{ item.due_date | fromNow() }}

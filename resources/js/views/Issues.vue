@@ -36,8 +36,8 @@
                 </td>
                 <td>{{ item.id }}</td>
                 <td>{{ item.priority }}</td>
-                <td>{{ item.details }}</td>
-                <td>{{ item.project.name }}</td>
+                <td>{{ item.details | truncate(60) }}</td>
+                <td>{{ item.project.name | truncate(40) }}</td>
                 <td width="15%">
                   <span class="hidden">{{ item.created_at }}</span>
                   {{ item.created_at | fromNow() }}
