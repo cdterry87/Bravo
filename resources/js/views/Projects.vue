@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid grid-list-md>
     <v-layout row>
       <Loading v-if="isLoading" />
       <v-container v-else>
@@ -145,7 +145,7 @@
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </v-fab-transition>
-  </div>
+  </v-container>
 </template>
 
 <script>

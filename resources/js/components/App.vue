@@ -37,7 +37,7 @@
         </v-tabs>
       </template>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <router-view></router-view>
 
       <v-snackbar
@@ -55,7 +55,7 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-snackbar>
-    </v-content>
+    </v-main>
     <div class="footer text-center mt-5 mb-3">
       Bravo &copy; 2020
     </div>
