@@ -35,6 +35,10 @@
             </span>
           </template>
 
+          <template v-slot:item.due_date="{ item }">
+            {{ item.due_date | fromNow }}
+          </template>
+
           <template v-slot:item.actions="{ item }">
             <v-form method="POST" id="deleteForm" @submit.prevent="deleteProject(item.id)">
               <v-btn text small :to="'/project/' + item.id" color="primary" class="white--text">

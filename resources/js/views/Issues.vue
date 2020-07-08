@@ -31,7 +31,16 @@
               <v-icon color="error" @click="resolveIssue(item.id, true)">mdi-alert</v-icon>
             </span>
           </template>
-          <template v-slot:actions="{ item }">
+
+          <template v-slot:item.details="{ item }">
+            {{ item.details | truncate(100) }}
+          </template>
+
+          <template v-slot:item.created_at="{ item }">
+            {{ item.created_at | fromNow }}
+          </template>
+
+          <template v-slot:item.actions="{ item }">
             <v-form method="POST" id="deleteForm" @submit.prevent="deleteIssue(item.id)">
               <v-btn text small :to="'/project/' + item.project.id" color="primary" class="white--text">
                 View

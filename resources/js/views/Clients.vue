@@ -32,6 +32,10 @@
             </span>
           </template>
 
+          <template v-slot:item.created_at="{ item }">
+            {{ item.created_at | fromNow }}
+          </template>
+
           <template v-slot:item.actions="{ item }">
             <v-form method="POST" id="deleteForm" @submit.prevent="deleteClient(item.id)">
               <v-btn text small :to="'/client/' + item.id" color="primary" class="white--text">
