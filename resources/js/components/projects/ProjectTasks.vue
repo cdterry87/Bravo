@@ -35,45 +35,39 @@
                 hide-default-footer
                 no-data-text="This project does not currently have any tasks."
               >
-                <template v-slot:body="{ items }">
-                  <tbody>
-                    <tr v-for="(item, key) in items" :key="key">
-                      <td>
-                        <span class="hidden">{{ item.completed }}</span>
-                        <span v-if="item.completed">
-                          <v-icon color="success" @click="completeTask(item.id, false)">mdi-checkbox-marked-circle</v-icon>
-                        </span>
-                        <span v-else-if="!item.completed && item.due_date != '' && item.due_date != null && new Date(item.due_date) < Date.now()">
-                          <v-icon color="error" @click="completeTask(item.id, true)">mdi-alert</v-icon>
-                        </span>
-                        <span v-else-if="!item.completed">
-                          <v-icon color="warning" @click="completeTask(item.id, true)">mdi-minus-circle</v-icon>
-                        </span>
-                      </td>
-                      <td>{{ item.id }}</td>
-                      <td>{{ item.details | truncate(100) }}</td>
-                      <td>
-                        <span class="hidden">{{ item.due_date }}</span>
-                        {{ item.due_date | fromNow() }}
-                      </td>
-                      <td>
-                        <v-form
-                          method="POST"
-                          id="deleteForm"
-                          @submit.prevent="deleteTask(item.id)"
-                        >
-                          <v-btn
-                            small
-                            text
-                            color="primary"
-                            class="white--text"
-                            @click="editTask(item)"
-                          >Edit</v-btn>
-                          <v-btn small text type="submit" color="red darken-1" class="white--text">Delete</v-btn>
-                        </v-form>
-                      </td>
-                    </tr>
-                  </tbody>
+                <template v-slot:item.completed="{ item }">
+                  <span class="hidden">{{ item.completed }}</span>
+                  <span v-if="item.completed">
+                    <v-icon color="success" @click="completeTask(item.id, false)">mdi-checkbox-marked-circle</v-icon>
+                  </span>
+                  <span v-else-if="!item.completed && item.due_date != '' && item.due_date != null && new Date(item.due_date) < Date.now()">
+                    <v-icon color="error" @click="completeTask(item.id, true)">mdi-alert</v-icon>
+                  </span>
+                  <span v-else-if="!item.completed">
+                    <v-icon color="warning" @click="completeTask(item.id, true)">mdi-minus-circle</v-icon>
+                  </span>
+                </template>
+
+                <template v-slot:item.due_date="{ item }">
+                  <span class="hidden">{{ item.due_date }}</span>
+                  {{ item.due_date | fromNow }}
+                </template>
+
+                <template v-slot:item.actions="{ item }">
+                  <v-form
+                    method="POST"
+                    id="deleteForm"
+                    @submit.prevent="deleteTask(item.id)"
+                  >
+                    <v-btn
+                      small
+                      text
+                      color="primary"
+                      class="white--text"
+                      @click="editTask(item)"
+                    >Edit</v-btn>
+                    <v-btn small text type="submit" color="red darken-1" class="white--text">Delete</v-btn>
+                  </v-form>
                 </template>
               </v-data-table>
             </div>

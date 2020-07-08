@@ -35,51 +35,48 @@
                 hide-default-footer
                 no-data-text="This project does not currently have any issues."
               >
-                <template v-slot:body="{ items }">
-                  <tbody>
-                    <tr v-for="(item, key) in items" :key="key">
-                      <td>
-                        <span class="hidden">{{ item.resolved }}</span>
-                        <span v-if="item.resolved">
-                          <v-icon
-                            class="pointer"
-                            color="success"
-                            @click="resolveIssue(item.id, false)"
-                          >mdi-checkbox-marked-circle</v-icon>
-                        </span>
-                        <span v-else>
-                          <v-icon
-                            class="pointer"
-                            color="error"
-                            @click="resolveIssue(item.id, true)"
-                          >mdi-minus-circle</v-icon>
-                        </span>
-                      </td>
-                      <td>{{ item.id }}</td>
-                      <td>{{ item.priority }}</td>
-                      <td>{{ item.details | truncate(100) }}</td>
-                      <td>
-                        <span class="hidden">{{ item.created_at }}</span>
-                        {{ item.created_at | fromNow() }}
-                      </td>
-                      <td>
-                        <v-form
-                          method="POST"
-                          id="deleteForm"
-                          @submit.prevent="deleteIssue(item.id)"
-                        >
-                          <v-btn
-                            small
-                            text
-                            color="primary"
-                            class="white--text"
-                            @click="editIssue(item)"
-                          >Edit</v-btn>
-                          <v-btn small text type="submit" color="red darken-1" class="white--text">Delete</v-btn>
-                        </v-form>
-                      </td>
-                    </tr>
-                  </tbody>
+                <template v-slot:item.resolved="{ item }">
+                  <span class="hidden">{{ item.resolved }}</span>
+                  <span v-if="item.resolved">
+                    <v-icon
+                      class="pointer"
+                      color="success"
+                      @click="resolveIssue(item.id, false)"
+                    >mdi-checkbox-marked-circle</v-icon>
+                  </span>
+                  <span v-else>
+                    <v-icon
+                      class="pointer"
+                      color="error"
+                      @click="resolveIssue(item.id, true)"
+                    >mdi-minus-circle</v-icon>
+                  </span>
+                </template>
+
+                <template v-slot:item.details="{ item }">
+                  {{ item.details | truncate(100) }}
+                </template>
+
+                <template v-slot:item.created_at="{ item }">
+                  <span class="hidden">{{ item.created_at }}</span>
+                  {{ item.created_at | fromNow }}
+                </template>
+
+                <template v-slot:item.actions="{ item }">
+                  <v-form
+                    method="POST"
+                    id="deleteForm"
+                    @submit.prevent="deleteIssue(item.id)"
+                  >
+                    <v-btn
+                      small
+                      text
+                      color="primary"
+                      class="white--text"
+                      @click="editIssue(item)"
+                    >Edit</v-btn>
+                    <v-btn small text type="submit" color="red darken-1" class="white--text">Delete</v-btn>
+                  </v-form>
                 </template>
               </v-data-table>
             </div>
@@ -113,11 +110,11 @@
                   <template v-slot:label>
                     <div>Priority:</div>
                   </template>
-                  <v-radio label="1" value="1"></v-radio>
-                  <v-radio label="2" value="2"></v-radio>
-                  <v-radio label="3" value="3"></v-radio>
-                  <v-radio label="4" value="4"></v-radio>
-                  <v-radio label="5" value="5"></v-radio>
+                  <v-radio label="1" :value="1" />
+                  <v-radio label="2" :value="2" />
+                  <v-radio label="3" :value="3" />
+                  <v-radio label="4" :value="4" />
+                  <v-radio label="5" :value="5" />
                 </v-radio-group>
               </v-flex>
             </v-layout>
@@ -168,7 +165,7 @@ export default {
     editIssue(issue) {
       this.dialog = true;
 
-      this.priority = issue.prority
+      this.priority = issue.priority
       this.details = issue.details
       this.issue_id = issue.id
     },

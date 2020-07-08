@@ -35,31 +35,21 @@
                 :items-per-page="-1"
                 hide-default-footer
               >
-                <template v-slot:body="{ items }">
-                  <tbody>
-                    <tr v-for="(item, key) in items" :key="key">
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.title }}</td>
-                      <td>{{ item.email }}</td>
-                      <td>{{ item.phone }}</td>
-                      <td>
-                        <v-form
-                          method="POST"
-                          id="deleteForm"
-                          @submit.prevent="deleteContact(item.id)"
-                        >
-                          <v-btn
-                            small
-                            text
-                            @click="editContact(item)"
-                            color="primary"
-                            class="white--text"
-                          >Edit</v-btn>
-                          <v-btn small text type="submit" color="red darken-1" class="white--text">Delete</v-btn>
-                        </v-form>
-                      </td>
-                    </tr>
-                  </tbody>
+                <template v-slot:item.actions="{ item }">
+                  <v-form
+                    method="POST"
+                    id="deleteForm"
+                    @submit.prevent="deleteContact(item.id)"
+                  >
+                    <v-btn
+                      small
+                      text
+                      @click="editContact(item)"
+                      color="primary"
+                      class="white--text"
+                    >Edit</v-btn>
+                    <v-btn small text type="submit" color="red darken-1" class="white--text">Delete</v-btn>
+                  </v-form>
                 </template>
               </v-data-table>
             </div>
