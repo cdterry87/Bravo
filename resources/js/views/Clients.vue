@@ -23,34 +23,24 @@
           hide-default-footer
           :items-per-page="-1"
         >
-          <template v-slot:body="{ items }">
-            <tbody>
-              <tr v-for="(item, key) in items" :key="key">
-                <td>
-                  <span v-if="item.active">
-                    <v-icon color="success" @click="activateClient(item.id, false)">mdi-checkbox-marked-circle</v-icon>
-                  </span>
-                  <span v-else>
-                    <v-icon color="warning" @click="activateClient(item.id, true)">mdi-minus-circle</v-icon>
-                  </span>
-                </td>
-                <td>{{ item.name }}</td>
-                <td width="15%">
-                  <span class="hidden">{{ item.created_at }}</span>
-                  {{ item.created_at | fromNow() }}
-                </td>
-                <td width="20%">
-                  <v-form method="POST" id="deleteForm" @submit.prevent="deleteClient(item.id)">
-                    <v-btn text small :to="'/client/' + item.id" color="primary" class="white--text">
-                      View
-                    </v-btn>
-                    <v-btn text small type="submit" color="red darken-1" class="white--text">
-                      Delete
-                    </v-btn>
-                  </v-form>
-                </td>
-              </tr>
-            </tbody>
+          <template v-slot:item.active="{ item }">
+            <span v-if="item.active">
+              <v-icon color="success" @click="activateClient(item.id, false)">mdi-checkbox-marked-circle</v-icon>
+            </span>
+            <span v-else>
+              <v-icon color="warning" @click="activateClient(item.id, true)">mdi-minus-circle</v-icon>
+            </span>
+          </template>
+
+          <template v-slot:item.actions="{ item }">
+            <v-form method="POST" id="deleteForm" @submit.prevent="deleteClient(item.id)">
+              <v-btn text small :to="'/client/' + item.id" color="primary" class="white--text">
+                View
+              </v-btn>
+              <v-btn text small type="submit" color="red darken-1" class="white--text">
+                Delete
+              </v-btn>
+            </v-form>
           </template>
         </v-data-table>
       </v-container>
@@ -128,7 +118,7 @@
         clients: [],
         search: '',
         headers: [
-          { text: 'Active', value: 'completed' },
+          { text: 'Active', value: 'active' },
           { text: 'Name', value: 'name' },
           { text: 'Since', value: 'created_at' },
           { text: 'Actions', value: 'actions', sortable: false },

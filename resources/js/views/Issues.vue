@@ -22,38 +22,24 @@
           hide-default-footer
           :items-per-page="-1"
         >
-          <template v-slot:body="{ items }">
-            <tbody>
-              <tr v-for="(item, key) in items" :key="key">
-                <td>
-                  <span class="hidden">{{ item.resolved }}</span>
-                  <span v-if="item.resolved">
-                    <v-icon color="success" @click="resolveIssue(item.id, false)">mdi-checkbox-marked-circle</v-icon>
-                  </span>
-                  <span v-else>
-                    <v-icon color="error" @click="resolveIssue(item.id, true)">mdi-alert</v-icon>
-                  </span>
-                </td>
-                <td>{{ item.id }}</td>
-                <td>{{ item.priority }}</td>
-                <td>{{ item.details | truncate(60) }}</td>
-                <td>{{ item.project.name | truncate(40) }}</td>
-                <td width="15%">
-                  <span class="hidden">{{ item.created_at }}</span>
-                  {{ item.created_at | fromNow() }}
-                </td>
-                <td width="20%">
-                  <v-form method="POST" id="deleteForm" @submit.prevent="deleteIssue(item.id)">
-                    <v-btn text small :to="'/project/' + item.project.id" color="primary" class="white--text">
-                      View
-                    </v-btn>
-                    <v-btn text small type="submit" color="red darken-1" class="white--text">
-                      Delete
-                    </v-btn>
-                  </v-form>
-                </td>
-              </tr>
-            </tbody>
+          <template v-slot:item.resolved="{ item }">
+            <span class="hidden">{{ item.resolved }}</span>
+            <span v-if="item.resolved">
+              <v-icon color="success" @click="resolveIssue(item.id, false)">mdi-checkbox-marked-circle</v-icon>
+            </span>
+            <span v-else>
+              <v-icon color="error" @click="resolveIssue(item.id, true)">mdi-alert</v-icon>
+            </span>
+          </template>
+          <template v-slot:actions="{ item }">
+            <v-form method="POST" id="deleteForm" @submit.prevent="deleteIssue(item.id)">
+              <v-btn text small :to="'/project/' + item.project.id" color="primary" class="white--text">
+                View
+              </v-btn>
+              <v-btn text small type="submit" color="red darken-1" class="white--text">
+                Delete
+              </v-btn>
+            </v-form>
           </template>
         </v-data-table>
       </v-container>

@@ -22,40 +22,28 @@
           :items-per-page="-1"
           hide-default-footer
         >
-          <template v-slot:body="{ items }">
-            <tbody>
-              <tr v-for="(item, key) in items" :key="key">
-                <td>
-                  <span class="hidden">{{ item.completed }}</span>
-                  <span v-if="item.completed">
-                    <v-icon color="success" @click="completeProject(item.id, false)">mdi-checkbox-marked-circle</v-icon>
-                  </span>
-                  <span v-else-if="!item.completed && item.due_date != '' && item.due_date != null && new Date(item.due_date) < Date.now()">
-                    <v-icon color="error" @click="completeProject(item.id, true)">mdi-alert</v-icon>
-                  </span>
-                  <span v-else-if="!item.completed">
-                    <v-icon color="warning" @click="completeProject(item.id, true)">mdi-minus-circle</v-icon>
-                  </span>
-                </td>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name | truncate(40) }}</td>
-                <td>{{ item.client.name | truncate(30) }}</td>
-                <td>
-                  <span class="hidden">{{ item.due_date }}</span>
-                  {{ item.due_date | fromNow() }}
-                </td>
-                <td>
-                  <v-form method="POST" id="deleteForm" @submit.prevent="deleteProject(item.id)">
-                    <v-btn text small :to="'/project/' + item.id" color="primary" class="white--text">
-                      View
-                    </v-btn>
-                    <v-btn text small type="submit" color="red darken-1" class="white--text">
-                      Delete
-                    </v-btn>
-                  </v-form>
-                </td>
-              </tr>
-            </tbody>
+          <template v-slot:item.completed="{ item }">
+            <span class="hidden">{{ item.completed }}</span>
+            <span v-if="item.completed">
+              <v-icon color="success" @click="completeProject(item.id, false)">mdi-checkbox-marked-circle</v-icon>
+            </span>
+            <span v-else-if="!item.completed && item.due_date != '' && item.due_date != null && new Date(item.due_date) < Date.now()">
+              <v-icon color="error" @click="completeProject(item.id, true)">mdi-alert</v-icon>
+            </span>
+            <span v-else-if="!item.completed">
+              <v-icon color="warning" @click="completeProject(item.id, true)">mdi-minus-circle</v-icon>
+            </span>
+          </template>
+
+          <template v-slot:item.actions="{ item }">
+            <v-form method="POST" id="deleteForm" @submit.prevent="deleteProject(item.id)">
+              <v-btn text small :to="'/project/' + item.id" color="primary" class="white--text">
+                View
+              </v-btn>
+              <v-btn text small type="submit" color="red darken-1" class="white--text">
+                Delete
+              </v-btn>
+            </v-form>
           </template>
         </v-data-table>
       </v-container>
