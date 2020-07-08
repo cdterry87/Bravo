@@ -1,6 +1,6 @@
 # Bravo
-A project manager application using Laravel + Vue.js + GraphQL
-
+A personal project manager built with Laravel + Vue.js + GraphQL 
+ 
 ## Installation
 1. Clone the project to your PC
 ```
