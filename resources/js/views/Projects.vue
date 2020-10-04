@@ -206,6 +206,9 @@
         }
       }
     },
+    created() {
+      Event.$on('refetchClients', this.$apollo.queries.getActiveClientNames.refetch())
+    },
     methods: {
       dueDate(due_date) {
         this.date_dialog = false
