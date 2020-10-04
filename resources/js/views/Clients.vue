@@ -170,6 +170,7 @@
           this.dialog = false
 
           this.$apollo.queries.getClients.refetch()
+          Event.$emit('refetchClients')
         }).catch(() => {
           console.log('Could not save client.')
         })
